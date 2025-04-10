@@ -18,7 +18,7 @@ pipeline {
         region = 'us-east-1'
         acc_ID = '135808959960'
         project = 'expense'
-        environment = ''  
+        environment = 'prod'  
         component = 'backend'
 
     }
@@ -57,11 +57,11 @@ pipeline {
                     sh """                   
                         aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${acc_ID}.dkr.ecr.${region}.amazonaws.com
 
-                        docker build -t ${acc_ID}.dkr.ecr.${region}.amazonaws.com/kdp-${project}-${params.ENVIRONMENT}/${component}:${appversion} .
+                        docker build -t ${acc_ID}.dkr.ecr.${region}.amazonaws.com/kdp-${project}-${environment}/${component}:${appversion} .
 
                         docker images
 
-                        docker push ${acc_ID}.dkr.ecr.${region}.amazonaws.com/kdp-${project}-${params.ENVIRONMENT}/${component}:${appversion}                 
+                        docker push ${acc_ID}.dkr.ecr.${region}.amazonaws.com/kdp-${project}-${environment}/${component}:${appversion}                 
 
                     """
                 }
@@ -76,7 +76,7 @@ pipeline {
                 
                 build job: 'CD-frontend-expense', parameters: [
                     string(name: 'version', value: "$appversion"),
-                    string(name: 'ENVIRONMENT', value: "${params.ENVIRONMENT}"),
+                    string(name: 'ENVIRONMENT', value: "prod"),
                 ], wait: true
             }
         }
