@@ -10,6 +10,7 @@ pipeline {
 
     parameters{
         booleanParam(name: 'deploy', defaultValue: false, description: 'Select to deploy or not')
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'uat', 'pre-prod', 'prod'], description: 'Select your Environment')
     }
     environment {
         DEBUG = 'true'
@@ -17,7 +18,7 @@ pipeline {
         region = 'us-east-1'
         acc_ID = '135808959960'
         project = 'expense'
-        environment = 'dev'
+        environment = ''
         component = 'backend'
 
     }
