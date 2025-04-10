@@ -18,7 +18,7 @@ pipeline {
         region = 'us-east-1'
         acc_ID = '135808959960'
         project = 'expense'
-        environment = 'params.ENVIRONMENT'
+        environment = '${params.ENVIRONMENT}'
         component = 'backend'
 
     }
