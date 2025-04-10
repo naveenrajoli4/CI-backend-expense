@@ -18,7 +18,7 @@ pipeline {
         region = 'us-east-1'
         acc_ID = '135808959960'
         project = 'expense'
-        environment = ''
+        environment = ''  
         component = 'backend'
 
     }
@@ -70,13 +70,13 @@ pipeline {
 
         stage('Deploy Backend') {
             when {
-                 expression { params.deeploy }
+                 expression { params.deploy }
             }
             steps {
                 
-                build job: 'CD-backend-expense', parameters: [
+                build job: 'CD-frontend-expense', parameters: [
                     string(name: 'version', value: "$appversion"),
-                    string(name: 'ENVIRONMENT', value: "dev"),
+                    string(name: 'ENVIRONMENT', value: "${params.ENVIRONMENT}"),
                 ], wait: true
             }
         }
